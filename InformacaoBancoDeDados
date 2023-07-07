@@ -1,0 +1,72 @@
+CREATE DATABASE vollmed_api
+
+create table medicos(
+    id bigint not null auto_increment,
+    nome varchar(100) not null,
+    email varchar(100) not null unique,
+    telefone varchar(20),
+    crm varchar(6) not null unique,
+    especialidade varchar(100) not null,
+    logradouro varchar(100) not null,
+    bairro varchar(100) not null,
+    cep varchar(9) not null,
+    complemento varchar(100),
+    numero varchar(20),
+    uf char(2) not null,
+    cidade varchar(100) not null,
+
+    primary key(id)
+);
+
+create table pacientes(
+	id bigint not null,
+	nome varchar(100) not null,
+    email varchar(100) not null unique,
+    telefone varchar(20) not null,
+    cpf varchar(15) not null unique,
+    logradouro varchar(100) not null,
+    bairro varchar(100) not null,
+    cep varchar(9) not null,
+    complemento varchar(100),
+    numero varchar(20),
+    uf char(2) not null,
+    cidade varchar(100) not null,
+
+    primary key(id)
+);
+
+//medicos
+{
+    "nome": "Renata Oliveira",
+    "email": "renata.oliveira@voll.med",
+    "telefone": "44978512321",
+    "crm": "554466",
+    "especialidade": "CARDIOLOGIA",
+    "endereco": {
+        "logradouro": "Avenida 32",
+        "bairro": "Tatuape",
+        "cep": "03807050",
+        "cidade": "São Paulo",
+        "uf": "SP",
+        "numero": "112",
+        "complemento": "Casa 11"
+        }
+}
+
+//Pacientes
+{
+"nome": "Julia Ferreira",
+"email": "Julia.ferreira@voll.med",
+"telefone": "44551565313",
+"cpf": "45544455566",
+"endereco": {
+    "logradouro": "rua Matarazzo",
+    "bairro": "Ermelino Matarazzo",
+    "cep": "65212414",
+    "cidade": "São Paulo",
+    "uf": "SP",
+    "numero": "4655",
+    "complemento": ""
+    }
+}
+
