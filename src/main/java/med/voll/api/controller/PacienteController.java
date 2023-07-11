@@ -1,5 +1,8 @@
 package med.voll.api.controller;
 
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.OneToMany;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import med.voll.api.paciente.*;
@@ -9,10 +12,15 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @RestController
 @RequestMapping("/pacientes")
 public class PacienteController {
 
+    @OneToMany
+    private List<AgendamentoController> agendamentos = new ArrayList<AgendamentoController>();
     @Autowired
     private PacienteRepository repository;
     @PostMapping

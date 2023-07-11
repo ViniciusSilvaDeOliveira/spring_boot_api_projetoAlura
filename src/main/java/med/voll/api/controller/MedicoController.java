@@ -1,8 +1,9 @@
 package med.voll.api.controller;
 
+import jakarta.persistence.OneToMany;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
-import med.voll.api.endereco.Endereco;
+
 import med.voll.api.medico.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -10,12 +11,14 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
 @RequestMapping("/medicos")
 public class MedicoController {
-
+    @OneToMany
+    private List<AgendamentoController> agendamentos = new ArrayList<AgendamentoController>();
     @Autowired
     private MedicoRepository repository; //classe repository que acesso o banco de dados
     @PostMapping
