@@ -25,6 +25,11 @@ public class AgendamentoController {
     @PostMapping
     @Transactional
     public void cadastrar(@RequestBody @Valid DadosCadastroAgendamento dados){
-        repository.save(new Agendamento(dados));
+        Agendamento agendamento = new Agendamento();
+        agendamento.setMedico(new Medico(dados.idMedico()));
+        agendamento.setPaciente(new Paciente(dados.idPaciente()));
+        agendamento.setDataAgendamento(dados.dataAgendamento());
+        agendamento.setHoraAgendamento(dados.horaAgendamento());
+        repository.save(agendamento);
     }
 }

@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import med.voll.api.agendamento.Agendamento;
 import med.voll.api.endereco.Endereco;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Table(name = "pacientes")
@@ -17,7 +18,8 @@ import java.util.List;
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
 public class Paciente {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String nome;
     private String email;
@@ -27,12 +29,19 @@ public class Paciente {
     @Embedded
     private Endereco endereco;
 
+    @OneToMany(mappedBy = "paciente")
+    private List<Agendamento> agendamentos = new ArrayList<>();
+
     public Paciente(DadosCadastroPaciente dadosPaciente){
         this.nome = dadosPaciente.nome();
         this.email = dadosPaciente.email();
         this.telefone = dadosPaciente.telefone();
         this.cpf = dadosPaciente.cpf();
         this.endereco = new Endereco(dadosPaciente.endereco());
+    }
+
+    public Paciente(Long id){
+        this.id = id;
     }
 
     public void atualizarInformacoesPaciente(DadosAtualizacaoPaciente dados) {
