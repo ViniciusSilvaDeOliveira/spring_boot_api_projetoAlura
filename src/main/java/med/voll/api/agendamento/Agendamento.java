@@ -6,6 +6,8 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import med.voll.api.medico.DadosCadastroMedico;
+import med.voll.api.medico.Medico;
+import med.voll.api.paciente.Paciente;
 
 @Table(name = "agendamentos")
 @Entity(name = "Agendamento")
@@ -21,6 +23,9 @@ public class Agendamento {
     private Long idPaciente;
     private String dataAgendamento;
     private String horaAgendamento;
+
+    @ManyToOne
+    private Medico medico;
 
     public Agendamento(DadosCadastroAgendamento dados){
         this.idMedico = dados.idMedico();

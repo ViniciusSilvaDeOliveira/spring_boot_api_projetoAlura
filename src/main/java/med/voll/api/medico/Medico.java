@@ -5,7 +5,10 @@ import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import med.voll.api.agendamento.Agendamento;
 import med.voll.api.endereco.Endereco;
+
+import java.util.List;
 
 @Table(name = "medicos")
 @Entity(name = "Medico")
@@ -27,6 +30,9 @@ public class Medico {
 
     @Embedded
     private Endereco endereco;
+
+    @OneToMany
+    private List<Agendamento> agendamento;
 
     public Medico(DadosCadastroMedico dados){
         this.nome = dados.nome();

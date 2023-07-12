@@ -15,7 +15,6 @@ import java.util.List;
 @RestController
 @RequestMapping("/medicos")
 public class MedicoController {
-
     @Autowired
     private MedicoRepository repository; //classe repository que acesso o banco de dados
     @PostMapping
