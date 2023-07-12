@@ -7,6 +7,8 @@ import med.voll.api.agendamento.Agendamento;
 import med.voll.api.agendamento.DadosCadastroAgendamento;
 import med.voll.api.agendamento.agendamentoRepository;
 
+import med.voll.api.medico.MedicoRepository;
+import med.voll.api.paciente.PacienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,6 +22,11 @@ public class AgendamentoController {
     private MedicoController medico;
     @ManyToOne
     private PacienteController paciente;
+
+    @Autowired
+    private MedicoRepository mr;
+    @Autowired
+    private PacienteRepository pr;
     @Autowired
     private agendamentoRepository repository;
 
