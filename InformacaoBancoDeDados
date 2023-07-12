@@ -36,9 +36,9 @@ create table pacientes(
 );
 
 create table agendamentos(
-    id biginit not null,
-    idMedico biginit not null,
-    idPaciente biginit not null,
+    id bigint not null,
+    idMedico bigint not null,
+    idPaciente bigint not null,
     dataAgendamento varchar(20) not null,
     horaAgendamento varchar(20) not null,
 

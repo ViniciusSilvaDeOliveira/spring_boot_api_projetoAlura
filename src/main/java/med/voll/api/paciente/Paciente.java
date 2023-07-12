@@ -27,9 +27,6 @@ public class Paciente {
     @Embedded
     private Endereco endereco;
 
-    @OneToMany
-    private List<Agendamento> agendamento;
-
     public Paciente(DadosCadastroPaciente dadosPaciente){
         this.nome = dadosPaciente.nome();
         this.email = dadosPaciente.email();
