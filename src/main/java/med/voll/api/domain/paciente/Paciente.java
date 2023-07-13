@@ -1,4 +1,4 @@
-package med.voll.api.medico;
+package med.voll.api.domain.paciente;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -6,58 +6,51 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import med.voll.api.agendamento.Agendamento;
-import med.voll.api.endereco.Endereco;
+import med.voll.api.domain.endereco.Endereco;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Table(name = "medicos")
-@Entity(name = "Medico")
+@Table(name = "pacientes")
+@Entity(name = "Paciente")
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
-public class Medico {
-
+public class Paciente {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private long id;
     private String nome;
     private String email;
     private String telefone;
-    private String crm;
-
-    @Enumerated(EnumType.STRING)
-    private Especialidade especialidade;
+    private String cpf;
 
     @Embedded
     private Endereco endereco;
 
-    @OneToMany(mappedBy = "medico")
+    @OneToMany(mappedBy = "paciente")
     private List<Agendamento> agendamentos = new ArrayList<>();
 
-    public Medico(DadosCadastroMedico dados){
-        this.nome = dados.nome();
-        this.email = dados.email();
-        this.telefone = dados.telefone();
-        this.crm = dados.crm();
-        this.especialidade = dados.especialidade();
-        this.endereco = new Endereco(dados.endereco());
+    public Paciente(DadosCadastroPaciente dadosPaciente){
+        this.nome = dadosPaciente.nome();
+        this.email = dadosPaciente.email();
+        this.telefone = dadosPaciente.telefone();
+        this.cpf = dadosPaciente.cpf();
+        this.endereco = new Endereco(dadosPaciente.endereco());
     }
 
-    public Medico(Long id){
+    public Paciente(Long id){
         this.id = id;
     }
 
-    public void atualizarInformacoes(DadosAtualizacaoMedico dados) {
-        if(dados.nome() != null){
-            this.nome = dados.nome();
+    public void atualizarInformacoesPaciente(DadosAtualizacaoPaciente dados) {
+        if(dados.email() != null){
+            this.email = dados.email();
         }
-
         if(dados.telefone() != null){
             this.telefone = dados.telefone();
         }
-
         if(dados.endereco() != null){
             this.endereco.atualizarInformacoes(dados.endereco());
         }

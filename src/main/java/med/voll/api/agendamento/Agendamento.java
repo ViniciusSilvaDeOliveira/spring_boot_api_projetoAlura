@@ -2,8 +2,8 @@ package med.voll.api.agendamento;
 
 import jakarta.persistence.*;
 import lombok.*;
-import med.voll.api.medico.Medico;
-import med.voll.api.paciente.Paciente;
+import med.voll.api.domain.medico.Medico;
+import med.voll.api.domain.paciente.Paciente;
 
 @Table(name = "agendamentos")
 @Entity(name = "Agendamento")
