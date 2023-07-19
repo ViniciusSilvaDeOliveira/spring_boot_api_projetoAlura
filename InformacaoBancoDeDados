@@ -37,14 +37,13 @@ create table pacientes(
 
 create table agendamentos(
     id bigint not null,
-    idMedico bigint not null,
-    idPaciente bigint not null,
-    dataAgendamento varchar(20) not null,
-    horaAgendamento varchar(20) not null,
+    id_Medico bigint not null,
+    id_Paciente bigint not null,
+    data timestamp not null,
 
     primary key(id),
-    foreign key (idMedico) references medicos(id),
-    foreign key (idPaciente) references pacientes(id)
+    foreign key (id_Medico) references medicos(id),
+    foreign key (id_Paciente) references pacientes(id)
 );
 
 //medicos

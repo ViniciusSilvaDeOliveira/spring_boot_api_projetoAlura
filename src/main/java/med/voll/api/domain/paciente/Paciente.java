@@ -5,7 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import med.voll.api.agendamento.Agendamento;
 import med.voll.api.domain.endereco.Endereco;
 
 import java.util.ArrayList;
@@ -28,9 +27,6 @@ public class Paciente {
 
     @Embedded
     private Endereco endereco;
-
-    @OneToMany(mappedBy = "paciente")
-    private List<Agendamento> agendamentos = new ArrayList<>();
 
     public Paciente(DadosCadastroPaciente dadosPaciente){
         this.nome = dadosPaciente.nome();
