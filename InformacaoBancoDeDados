@@ -32,18 +32,21 @@ create table pacientes(
     uf char(2) not null,
     cidade varchar(100) not null,
 
+    ativo boolean,
+
     primary key(id)
 );
 
-create table agendamentos(
+create table consultas(
     id bigint not null,
     id_Medico bigint not null,
     id_Paciente bigint not null,
     data timestamp not null,
+    motivo_cancelamento varchar(50)
 
     primary key(id),
-    foreign key (id_Medico) references medicos(id),
-    foreign key (id_Paciente) references pacientes(id)
+    constraint fk_consultas_medico_id foreign key (id_Medico) references medicos(id),
+    constraint fk_consultas_paciente_id foreign key (id_Paciente) references pacientes(id)
 );
 
 //medicos

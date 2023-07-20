@@ -1,25 +1,62 @@
 package med.voll.api.domain.consulta;
 
+import med.voll.api.domain.ValidacaoException;
+import med.voll.api.domain.consulta.validacoes.ValidadorAgendamentoDeConsulta;
 import med.voll.api.domain.medico.Medico;
 import med.voll.api.domain.medico.MedicoRepository;
 import med.voll.api.domain.paciente.PacienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class AgendaDeConsultas {
     @Autowired
     private ConsultaRepository consultaRepository;
-
     @Autowired
     private MedicoRepository medicoRepository;
-
     @Autowired
     private PacienteRepository pacienteRepository;
-    public void agendar(DadosAgendamentoConsulta dadosConsulta){
-        var medico = medicoRepository.findById(dadosConsulta.idMedico()).get();
-        var paciente = pacienteRepository.findById(dadosConsulta.idPaciente()).get();
-        var consulta = new Consulta(null, medico, paciente, dadosConsulta.data());
+
+    @Autowired
+    private List<ValidadorAgendamentoDeConsulta> validadores; //cria uma lista para receber os validadores
+
+    public void agendar(DadosAgendamentoConsulta dados){
+        if (!pacienteRepository.existsById(dados.idPaciente())){
+            throw new ValidacaoException("Id do paciente informado não existe!");
+        }
+
+        if (dados.idMedico() != null && !medicoRepository.existsById(dados.idMedico())){
+            throw new ValidacaoException("Id do médico informado não existe!");
+        }
+
+        validadores.forEach(v -> v.validar(dados));//estou percorrendo todos os validadores e passando os dados para validar as informações
+
+        var medico = escolherMedico(dados);//pega o id de um médico aleatório
+        var paciente = pacienteRepository.getReferenceById(dados.idPaciente());//pega o id do paciente
+        var consulta = new Consulta(null, medico, paciente, dados.data(), null); //cria um obj com as informacoes e mando para salvar no banco de dados
         consultaRepository.save(consulta);
+    }
+
+    private Medico escolherMedico(DadosAgendamentoConsulta dados) {
+        if (dados.idMedico() != null){
+            return medicoRepository.getReferenceById(dados.idMedico());
+        }
+
+        if (dados.especialidade() == null){
+            throw new ValidacaoException("Especialidade é orbigatória quando o médico não for escolhido");
+        }
+
+        return medicoRepository.escolherMedicoAleatorioLivreNaData(dados.especialidade(), dados.data());
+    }
+
+    public void cancelar(DadosCancelamentoConsulta dados){
+        if (!consultaRepository.existsById(dados.idConsulta())){
+            throw new ValidacaoException("Id da Consulta não existe!");
+        }
+
+        var consulta = consultaRepository.getReferenceById(dados.idConsulta());
+        consulta.cancelar(dados.motivo());
     }
 }
