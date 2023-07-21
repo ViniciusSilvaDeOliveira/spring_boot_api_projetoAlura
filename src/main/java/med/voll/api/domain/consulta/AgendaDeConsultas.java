@@ -33,11 +33,11 @@ public class AgendaDeConsultas {
 
         validadores.forEach(v -> v.validar(dados));//estou percorrendo todos os validadores e passando os dados para validar as informações
 
+        var paciente = pacienteRepository.getReferenceById(dados.idPaciente());//pega o id do paciente
         var medico = escolherMedico(dados);//pega o id de um médico aleatório
         if (medico == null){
             throw new ValidacaoException("Não existe médico disponível nessa data!");
         }
-        var paciente = pacienteRepository.getReferenceById(dados.idPaciente());//pega o id do paciente
         var consulta = new Consulta(null, medico, paciente, dados.data(), null); //cria um obj com as informacoes e mando para salvar no banco de dados
         consultaRepository.save(consulta);
 
