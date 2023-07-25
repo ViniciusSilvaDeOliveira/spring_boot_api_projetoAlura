@@ -7,9 +7,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import med.voll.api.domain.endereco.Endereco;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Table(name = "medicos")
 @Entity(name = "Medico")
 @Getter
